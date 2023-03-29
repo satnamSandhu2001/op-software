@@ -1,0 +1,12 @@
+export const NEW_ORDER_REQUEST = 'NEW_ORDER_REQUEST';
+export const NEW_ORDER_SUCCESS = 'NEW_ORDER_SUCCESS';
+export const NEW_ORDER_FAIL = 'NEW_ORDER_FAIL';
+export const NEW_ORDER_RESET = 'NEW_ORDER_RESET';
+
+export const ADD_CART_REQUEST = 'ADD_CART_REQUEST';
+export const ADD_CART_SUCCESS = 'ADD_CART_SUCCESS';
+export const CART_RESET = 'CART_RESET';
+
+export const LOADING_TRUE = 'LOADING_TRUE';
+export const LOADING_FALSE = 'LOADING_FALSE';
+export const CLEAR_ERRORS = 'CLEAR_ERRORS';

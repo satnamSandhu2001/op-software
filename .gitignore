@@ -1,0 +1,3 @@
+node_modules/
+backend/uploads/software
+backend/config/config.env

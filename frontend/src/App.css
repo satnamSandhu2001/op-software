@@ -1,0 +1,12 @@
+.login_bg {
+  background-image: url(./images/login-bg-shape.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left bottom;
+}
+.bg-reset-password {
+  background: url(./images/login-bg-shape.png), #c7d2fe;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: left bottom;
+}
