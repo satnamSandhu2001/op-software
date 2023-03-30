@@ -22,9 +22,9 @@ const Statics = () => {
     let time = new Date().getHours();
     if (time < 12) {
       setwish('Good morning');
-    } else if (time > 12 && time < 3) {
+    } else if (time > 12 && time < 15) {
       setwish('Good afternoon');
-    } else if (time > 3 && time < 7) {
+    } else if (time > 15 && time < 18) {
       setwish('Good evening');
     } else {
       setwish('Good night');

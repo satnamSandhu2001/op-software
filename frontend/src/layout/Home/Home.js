@@ -141,7 +141,7 @@ const Home = () => {
                 schedule for your business.
               </p>
               <Link
-                to="/subscriptions"
+                to="/panel/subscriptions"
                 className="font-semibold w-fit text-black bg-white rounded-full px-7 py-3 transition-all duration-500 ease-linear hover:scale-105 flex items-center gap-x-1"
               >
                 Download
