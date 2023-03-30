@@ -1,3 +1,6 @@
 node_modules/
-backend/uploads/software/**
-backend/config/config.env
+
+!**/uploads/software/
+**/uploads/software/**/*
+
+backend/config/*.env
