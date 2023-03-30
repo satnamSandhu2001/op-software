@@ -2,5 +2,6 @@ node_modules/
 
 !**/uploads/software/
 **/uploads/software/**/*
+!**/uploads/software/empty.txt
 
 backend/config/*.env
