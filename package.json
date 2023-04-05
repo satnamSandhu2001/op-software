@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon backend/server.js",
     "start": "node backend/server.js",
-    "postbuild": "npm install && npm install --prefix frontend && npm run build --prefix frontend"
+    "postbuild": "npm install && npm install --prefix frontend && npm run build:css --prefix frontend && npm run build --prefix frontend"
   },
   "author": "",
   "license": "ISC",

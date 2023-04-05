@@ -36,7 +36,7 @@ exports.loginUser = tryCatchError(async (req, res, next) => {
   if (!email || !password) {
     return next(new ErrorHandler('Please Enter Email & Password!!', 400));
   }
-  //   .select('+password'); used because password select : false in userModel
+  //   .select('+password'); used because password select : false in userMode
   let user = await User.findOne({ email }).select('+password');
   if (!user) {
     return next(new ErrorHandler('Invalid Email or Password!!', 401));

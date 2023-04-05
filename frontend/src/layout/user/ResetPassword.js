@@ -94,7 +94,7 @@ const ResetPassword = () => {
     <>
       <MetaData title={`OpSoftware - Reset Password`} />
       <ToastContainer />
-      <div className="select-none flex items-center justify-center h-screen w-screen fixed top-0 left-0 bg-reset-password">
+      <div className="select-none flex items-center justify-center h-screen w-screen bg-reset-password">
         {/* inner */}
         <form
           onSubmit={handleSubmit}
