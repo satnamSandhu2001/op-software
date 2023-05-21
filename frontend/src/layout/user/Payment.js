@@ -136,7 +136,7 @@ const Payment = ({ razorpayApiKey }) => {
 
   useEffect(() => {
     if (newOrderSuccess) {
-      navigate('panel/subscriptions', { replace: true });
+      navigate('/panel/subscriptions', { replace: true });
       dispatch(resetOrderState());
     }
     if (!isAuthenticated) {
