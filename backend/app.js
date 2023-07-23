@@ -26,7 +26,7 @@ app.use('/api/v1', paymentRoute);
 app.use('/api/v1', softwareRoute);
 app.use('/api/v1', reportsRoute);
 
-if (process.env.NODE_ENV === 'PRODUCTION') {
+if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
   app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, '../frontend/build/index.html'));

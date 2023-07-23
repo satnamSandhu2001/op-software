@@ -25,7 +25,6 @@ exports.getSubscriptionDetails = tryCatchError(async (req, res, next) => {
 // Update Subscription --Admin
 exports.updateSubscription = tryCatchError(async (req, res, next) => {
   const { item, name } = req.body;
-  console.log(item);
   const { id } = req.params;
   await Subscription.findByIdAndUpdate(id, {
     $set: { item, name },

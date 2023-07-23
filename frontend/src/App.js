@@ -26,6 +26,7 @@ import SingleUser from './layout/admin/SingleUser';
 import Footer from './components/Footer';
 import NotFound from './layout/Home/NotFound';
 import Contact from './layout/Contact';
+import OldData from './layout/admin/OldData';
 
 function App() {
   const { loading } = useSelector((state) => state.user);
@@ -91,6 +92,7 @@ function App() {
           <Route path="/panel/users" element={<UserList />} />
           <Route path="/panel/user/:id" element={<SingleUser />} />
           <Route path="/panel/orders" element={<Orders />} />
+          <Route path="/panel/orders/old" element={<OldData />} />
           <Route
             path="/panel/admin/subscriptions"
             element={<SubscriptionsAdmin />}

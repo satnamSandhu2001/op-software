@@ -56,7 +56,6 @@ exports.updateSoftware = tryCatchError(async (req, res, next) => {
   const findSoft = await Subscription.findById(id);
 
   if (findSoft) {
-    console.log('findSoft : ', findSoft);
     const oldfileName = findSoft.filename;
     try {
       fs.unlinkSync(path.join(__dirname, '../uploads/software/' + oldfileName));

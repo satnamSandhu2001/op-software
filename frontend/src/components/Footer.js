@@ -58,7 +58,7 @@ const Footer = () => {
               </svg>
             </a>
             <a
-              href="https://wa.me/919371070002"
+              href="https://wa.me/919814549070"
               target="blank"
               className="rounded-full p-1 group bg-transparent duration-500 border border-white hover:bg-white"
             >
@@ -195,14 +195,14 @@ const Footer = () => {
       </div>
       <div className="mt-10 border-t border-white/30 py-8">
         <p className="text-center text-white/90">
-          Designed & Developed by{' '}
+          Designed & Developed by -{' '}
           <a
-            href="tel:+919371070002"
-            className="text-white block sm:inline-block"
+            href="www.digitalpeakers.com"
+            target="_blank"
+            className="text-white tracking-wider font-semibold block sm:inline-block"
           >
-            @Satnam Sandhu
+            @www.digitalpeakers.com
           </a>{' '}
-          - 2023
         </p>
       </div>
     </footer>

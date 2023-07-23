@@ -117,6 +117,26 @@ const UserSidebar = ({ activeTab }) => {
                     </span>
                   </Link>
                   <Link
+                    to="/panel/orders/old"
+                    className={`flex items-center justify-center md:justify-start w-[90%] mx-auto rounded-lg overflow-hidden p-1 pl-2 my-2 transition-colors duration-200 border-l-4 hover:text-blue hover:bg-slate-50 hover:shadow-soft-xl ${
+                      activeTab === 'old_orders'
+                        ? 'border-blue bg-slate-50 text-blue shadow-soft-xl'
+                        : 'border-white text-[#000229]'
+                    }`}
+                  >
+                    <span
+                      className={`text-left px-1 py-2 md:p-2 mr-1 ${
+                        activeTab !== 'orders' &&
+                        'shadow-soft-xl bg-slate-100 rounded-lg'
+                      }`}
+                    >
+                      <FaCartArrowDown />
+                    </span>
+                    <span className="mx-2 text-lg font-normal hidden md:inline-block">
+                      Old Data
+                    </span>
+                  </Link>
+                  <Link
                     to="/panel/users"
                     className={`flex items-center justify-center md:justify-start w-[90%] mx-auto rounded-lg overflow-hidden p-1 pl-2 my-2 transition-colors duration-200 border-l-4 hover:text-blue hover:bg-slate-50 hover:shadow-soft-xl ${
                       activeTab === 'users'

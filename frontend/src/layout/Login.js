@@ -61,7 +61,6 @@ const LoginSignup = () => {
   const redirect = location.search
     ? `/${location.search.split('redirect=')[1]}`
     : '/panel/account';
-  // console.log(location.search);
   useEffect(() => {
     if (error) {
       toast.warn(error, {

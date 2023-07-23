@@ -88,7 +88,6 @@ export const logout = () => async (dispatch) => {
 
 export const updateProfile = (userData) => async (dispatch) => {
   try {
-    console.log(userData);
     dispatch({ type: UPDATE_PROFILE_REQUEST });
     const config = { headers: { 'Content-type': 'application/json' } };
 

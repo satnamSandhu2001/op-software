@@ -8,6 +8,7 @@ const User = require('../models/userModel');
 const path = require('path');
 const fs = require('fs');
 const sendEmail = require('../utils/sendEmail');
+const connectSqlDB = require('../config/sqlDb');
 var newOrderEmail = path.join(__dirname, '../utils/newOrderEmail.html');
 
 // Create new Order
@@ -64,6 +65,12 @@ exports.newOrder = tryCatchError(async (req, res, next) => {
     );
   });
 
+  // save product key in SQl
+  let connection = await connectSqlDB();
+  await connection
+    .request()
+    .query(`insert into OPUser.OpUser (ProductKey) values ('${productKey}')`);
+
   const order = await Order.create({
     orderItem: subscription[0],
     paymentInfo,
@@ -72,6 +79,7 @@ exports.newOrder = tryCatchError(async (req, res, next) => {
     productKey,
   });
   await order.save();
+
   res.status(201).json({ success: true, order });
 });
 
@@ -85,7 +93,6 @@ exports.userOrders = tryCatchError(async (req, res, next) => {
 // Get my Orders
 exports.myOrders = tryCatchError(async (req, res, next) => {
   let orders = await Order.find({ user: req.user._id });
-
   res.status(200).json({ success: true, orders });
 });
 // Get single Order
@@ -98,17 +105,90 @@ exports.getSingleOrder = tryCatchError(async (req, res, next) => {
     return next(new ErrorHandler('Order not found', 404));
   }
 
-  res.status(200).json({ success: true, order });
+  let connection = await connectSqlDB();
+  let result = await connection
+    .request()
+    .query(
+      `select * from OPUser.OPUser where ProductKey='${order.productKey}'`
+    );
+
+  res.status(200).json({
+    success: true,
+    order: { data1: order, data2: result.recordset[0] },
+  });
 });
 
 // Get all Orders --ADMIN
 exports.getAllOrders = tryCatchError(async (req, res, next) => {
-  let orders = await Order.find();
-  let totalPrice = 0;
-  orders.forEach((o) => {
-    totalPrice += Number(o.totalPrice);
-  });
-  res.status(200).json({ success: true, orders, totalPrice });
+  let { query } = req.query;
+
+  let orders = await Order.aggregate([
+    {
+      $addFields: {
+        expiryDateStr: {
+          $toString: '$expiryDate',
+        },
+        createdAtStr: {
+          $toString: '$createdAt',
+        },
+      },
+    },
+    {
+      $match: {
+        $or: [
+          {
+            productKey: {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+          {
+            createdAtStr: {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+          {
+            expiryDateStr: {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+          {
+            'paymentInfo.paymentId': {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+          {
+            'orderItem.item.price': {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+          {
+            'orderItem.name': {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+          {
+            'orderItem.item.name': {
+              $regex: query,
+              $options: 'i',
+            },
+          },
+        ],
+      },
+    },
+    {
+      $project: {
+        expiryDateStr: 0,
+        createdAtStr: 0,
+      },
+    },
+  ]);
+  res.status(200).json({ success: true, orders });
 });
 
 // Delete order
@@ -119,4 +199,28 @@ exports.deleteOrder = tryCatchError(async (req, res, next) => {
   }
   let deleteOrder = await Order.findByIdAndDelete(req.params.id);
   res.status(200).json({ success: true });
+});
+
+// get old sql data
+exports.getOldSQLData = tryCatchError(async (req, res, next) => {
+  let query = req.query.query;
+
+  let pageNo = req.query.pageNo || 1;
+  let limit = 20;
+  let skip = pageNo == 1 ? 0 : pageNo * limit;
+
+  let sqlQuery = `SELECT *, count(*) over() as totalRows FROM OPUser.OpUser WHERE ProductKey IS NULL${
+    query
+      ? ' ' +
+        `And OpUserId LIKE '%${query}%' OR Narration LIKE '%${query}%' OR MACAddress LIKE '%${query}%' OR RegisterDate LIKE '%${query}%' OR ExpiryDate LIKE '%${query}%'`
+      : ''
+  } ORDER BY OpUserId OFFSET ${skip} ROWS FETCH NEXT ${limit} ROWS ONLY`;
+
+  let sql = await connectSqlDB();
+  let results = await sql.request().query(sqlQuery);
+
+  let totalPages = Math.floor(
+    results.recordset[0] ? results.recordset[0].totalRows / limit : 0
+  );
+  res.status(200).json({ results: results.recordset, totalPages });
 });

@@ -13,6 +13,7 @@ const Subscriptions = () => {
 
   const [orders, setorders] = useState([]);
   const [downloadProgress, setdownloadProgress] = useState(0);
+
   const getMyOrders = async () => {
     try {
       dispatch(loadingTrue());
@@ -24,6 +25,7 @@ const Subscriptions = () => {
       dispatch(loadingFalse());
     }
   };
+
   const downloadSoftware = async (_id) => {
     if (!_id) {
       return;
@@ -66,7 +68,7 @@ const Subscriptions = () => {
   return (
     <>
       <MetaData title={`OpSoftware - My Subscriptions`} />
-      <div className="flex bg-gray-100">
+      <div className="flex bg-gray-100 relative">
         <UserSidebar activeTab="subscriptions" />
         <div className="pt-24 sm:pt-28 lg:pt-36 px-4 sm:px-12 lg:px-14 w-full overflow-hidden">
           <h3 className="text-black underline underline-offset-[6px] text-xl font-bold mb-4">
@@ -77,7 +79,11 @@ const Subscriptions = () => {
               <table className="rounded-md overflow-hidden">
                 <thead className="bg-blue">
                   <tr className="text-white">
-                    <th className="min-w-[170px] text-left whitespace-nowrap px-4 pl-4 py-3 border-l border-white border-l-blue">
+                    <th className="text-left whitespace-nowrap px-4 py-3 border-l border-white border-l-blue">
+                      Sr.
+                    </th>
+
+                    <th className="min-w-[170px] pl-4 text-left whitespace-nowrap px-4 py-3 border-l-2 border-white">
                       Software
                     </th>
                     <th className="text-left whitespace-nowrap px-4 py-3 border-l-2 border-white">
@@ -124,8 +130,12 @@ const Subscriptions = () => {
 
                     return (
                       <tr key={i} className="even:bg-indigo-100">
-                        <td className="py-3 border border-black/10 px-4 hover:bg-slate-300 duration-300">
-                          <Link to="/pricing">{item.orderItem.name}</Link>
+                        <td className="py-3 border border-black/10 px-4">
+                          {i + 1}
+                        </td>
+
+                        <td className="py-3 border border-black/10 px-4">
+                          {item.orderItem.name}
                         </td>
                         <td className="py-3 border border-black/10 px-4">
                           {item.orderItem.item.name}
