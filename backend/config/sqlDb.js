@@ -6,7 +6,7 @@ const sqlConfig = {
   user: process.env.SQL_USER,
   // database: 'test',
   password: process.env.SQL_PASSWORD,
-  port: process.env.SQL_PORT,
+  port: Number(process.env.SQL_PORT),
   options: {
     encrypt: false,
   },

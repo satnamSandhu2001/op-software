@@ -5,12 +5,17 @@ const ErrorHandler = require('../utils/errorHandler');
 
 exports.isAuthenticatedUser = tryCatchError(async (req, res, next) => {
   const { token } = req.cookies;
+
   if (!token || token === null) {
+    let socketId = req.headers['socket-id'];
+    if (socketId) io.to(socketId).emit('logout');
     return next(new ErrorHandler('Please Login to access this record', 401));
   }
   const decodedData = jwt.verify(token, process.env.JWT_SECRET);
   req.user = await User.findById(decodedData.id);
   if (!req.user) {
+    let socketId = req.headers['socket-id'];
+    if (socketId) io.to(socketId).emit('logout');
     return next(new ErrorHandler('Please Login to access this record', 401));
   }
   next();

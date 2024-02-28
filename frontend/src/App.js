@@ -27,6 +27,9 @@ import Footer from './components/Footer';
 import NotFound from './layout/Home/NotFound';
 import Contact from './layout/Contact';
 import OldData from './layout/admin/OldData';
+import { connectSocket, socket } from './utils/socket';
+import { LOGOUT_SUCCESS } from './store/constants/userConstants';
+import { addSocketId } from './utils/axios';
 
 function App() {
   const { loading } = useSelector((state) => state.user);
@@ -53,6 +56,17 @@ function App() {
       setrazorpayApiKey(data.key);
     } catch (error) {}
   }
+
+  useEffect(() => {
+    let io = connectSocket();
+    io.on('connect', () => {
+      addSocketId(socket.id);
+    });
+    socket.on('logout', () => {
+      dispatch({ type: LOGOUT_SUCCESS });
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [socket, dispatch]);
 
   useEffect(() => {
     dispatch(loadUser());
